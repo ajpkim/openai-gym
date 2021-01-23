@@ -1,0 +1,18 @@
+
+env: CartPole-v0
+# env: LunarLander-v2
+
+render: False
+log_file: logs/REINFORCE.log
+
+hidden_sizes:
+  - 64
+  - 64
+lr: 0.0005
+activation: nn.ReLU
+gamma: 0.99
+# buffer_size: 5000
+epoch_steps: 1000
+epochs: 300
+
+
