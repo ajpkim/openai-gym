@@ -1,3 +1,4 @@
+import pdb
 import torch
 import torch.nn as nn
 
@@ -24,7 +25,7 @@ class CategoricalMLP(nn.Module):
         logits = self.logits_net(obs)
         return torch.distributions.Categorical(logits=logits)
 
-    def action_log_probs(obs, actions):
+    def action_log_probs(self, obs, actions):
         logits = self.logits_net(obs)
         pi = torch.distributions.Categorical(logits=logits)
         return pi.log_prob(actions)
