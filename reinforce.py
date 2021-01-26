@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 
-from MLP_nets import CategoricalMLP, GaussianMLP
+from MLP_nets import CategoricalPolicyNetMLP, GaussianPolicyMLP
 from utils.load_config import load_config
 
 
@@ -78,23 +78,20 @@ def REINFORCE(config):
         - epoch steps
         - gamma (discount rate)
         - learning rate
-
-    returns:
-      - dict of losses, returns, and length for all episodes.
     """
     env = gym.make(config.env)
     if isinstance(env.action_space, gym.spaces.Discrete):
-        policy_net = CategoricalMLP(env.observation_space.shape[0],
+        policy_net = CategoricalPolicyMLP(env.observation_space.shape[0],
                                     config.hidden_sizes,
                                     env.action_space.n,
                                     config.activation)
 
     # TODO - write GaussianMLP class
-    # elif isinstance(env.action_space, gym.space.Box):
-    #     policy_net = GaussianMLP(env.observation_space.shape[0],
-    #                              config.hidden_sizes,
-    #                              env.action_space.shape[0],
-    #                              config.activation)
+    elif isinstance(env.action_space, gym.space.Box):
+        policy_net = GaussianPolicyMLP(env.observation_space.shape[0],
+                                 config.hidden_sizes,
+                                 env.action_space.shape[0],
+                                 config.activation)
 
     optimizer = torch.optim.Adam(params=policy_net.parameters(), lr=config.lr)
     memory_buffer = REINFORCE_Buffer(config.gamma)

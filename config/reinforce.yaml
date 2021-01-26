@@ -1,13 +1,16 @@
-logdir: runs/reinforce/cartpole  # TensorBoard
+#logdir: runs/reinforce/CartPole  # TensorBoard
+logdir: runs/reinforce/LunarLander  # TensorBoard
 
-env: CartPole-v0
-# env: LunarLander-v2
+#env: CartPole-v0
+env: LunarLander-v2
+
 render: False
 hidden_sizes:
   - 64
   - 64
-lr: 0.0003
+
+lr: 0.0005
 activation: nn.ReLU
 gamma: 0.99
-epoch_steps: 2000
-epochs: 2000
+epoch_steps: 5000
+epochs: 10000
